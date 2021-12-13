@@ -12,23 +12,21 @@ import org.firstinspires.ftc.teamcode.robot.Subsystem;
 
 public class DuckSpin implements Subsystem {
     private final DcMotorEx spinMotor;
-    public final double drivePower;
+    public double drivePower;
     // power: positive clockwise
 
-    public DuckSpin(Robot robot, double power) {
+    public DuckSpin(Robot robot) {
         spinMotor = robot.getMotor("duck");
+    }
+
+    public void start(double power) {
         drivePower = power;
     }
 
-    public void start() {
-        spinMotor.setPower(drivePower);
-    }
-
-    public void stop() {
-        spinMotor.setPower(0);
-    }
+    public void stop() { drivePower=0; }
 
     public void update(TelemetryPacket packet) {
+        spinMotor.setPower(drivePower);
         // todo: should implemnt DuckSpin as a subsystem!!!
     }
 }

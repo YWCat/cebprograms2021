@@ -23,7 +23,7 @@ public class TeleFreightY extends LinearOpMode {
         SimpleMecanumDrive mecanumDrive = new SimpleMecanumDrive(robot, telemetry);
         Intake intake = new Intake(robot);
         Outtake outtake = new Outtake(robot, telemetry);
-        DuckSpin duckSpin = new DuckSpin(robot, 0.4);
+        DuckSpin duckSpin = new DuckSpin(robot);
 
         robot.registerSubsystem(mecanumDrive);
         robot.registerSubsystem(outtake);
@@ -81,10 +81,10 @@ public class TeleFreightY extends LinearOpMode {
             }
 
             if (gamepad2.a) {
-                duckSpin.start();
+                duckSpin.start(0.6);
             }
 
-            if (gamepad2.a) {
+            if (gamepad2.b) {
                 duckSpin.stop();
             }
 
