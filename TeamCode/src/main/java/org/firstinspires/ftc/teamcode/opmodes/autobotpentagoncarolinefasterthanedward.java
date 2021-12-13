@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.CrabRobot;
 public class autobotpentagoncarolinefasterthanedward extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        CrabRobot robot = new CrabRobot(this);
+        CrabRobot robot = new CrabRobot(this, telemetry);
         double driveTime;
         double turnAngle;
         DriveForTime driveCommand;

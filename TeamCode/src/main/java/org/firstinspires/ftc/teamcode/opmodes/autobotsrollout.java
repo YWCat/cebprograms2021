@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.CrabRobot;
 public class autobotsrollout extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        CrabRobot robot = new CrabRobot(this);
+        CrabRobot robot = new CrabRobot(this, telemetry);
         double driveTime;
 
         waitForStart();
@@ -37,8 +37,8 @@ public class autobotsrollout extends LinearOpMode {
         // spin carousel
         double spinPower = 0.5;
         driveTime = 3;
-        Spin spinDuck = new Spin(robot.slide,spinPower, driveTime);
-        robot.runCommands(spinDuck);
+        //Spin spinDuck = new Spin(robot.slide,spinPower, driveTime);
+        //robot.runCommands(spinDuck);
 //obama
     }
 }

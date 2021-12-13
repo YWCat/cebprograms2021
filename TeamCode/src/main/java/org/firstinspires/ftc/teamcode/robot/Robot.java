@@ -6,6 +6,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,6 +14,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.hardware.CachingDcMotorEx;
 import org.firstinspires.ftc.teamcode.hardware.CachingServo;
 import org.firstinspires.ftc.teamcode.hardware.Encoder;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +112,16 @@ public class Robot {
             command.stop();
             commands.remove(command);
         }
+    }
+
+    public ColorSensor getColorSensor(String deviceName){
+        ColorSensor color = hardwareMap.get(ColorSensor.class, deviceName);
+        return color;
+    }
+
+    public DistanceSensor getDistanceSensor(String deviceName){
+        DistanceSensor dist = hardwareMap.get(DistanceSensor.class, deviceName);
+        return dist;
     }
 
     public DcMotorEx getMotor(String deviceName) {
