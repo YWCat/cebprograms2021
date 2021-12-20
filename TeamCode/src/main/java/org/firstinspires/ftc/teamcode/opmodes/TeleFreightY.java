@@ -10,40 +10,51 @@ import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 import org.firstinspires.ftc.teamcode.subsystems.SimpleMecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.DuckSpin;
+import org.firstinspires.ftc.teamcode.subsystems.CrabRobot;
 
 import android.util.Log;
 
 @TeleOp
 public class TeleFreightY extends LinearOpMode {
 
+    private CrabRobot crabRobot;
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot robot = new Robot(this);
+        /*
+        Intake intake = new Intake(crabRobot);
+        Outtake outtake = new Outtake(crabRobot, telemetry);
+        DuckSpin duckSpin = new DuckSpin(crabRobot);
 
-        SimpleMecanumDrive mecanumDrive = new SimpleMecanumDrive(robot, telemetry);
-        Intake intake = new Intake(robot);
-        Outtake outtake = new Outtake(robot, telemetry);
-        DuckSpin duckSpin = new DuckSpin(robot);
+        /*
+        crabRobot.registerSubsystem(outtake);
+        crabRobot.registerSubsystem(intake);
+        crabRobot.registerSubsystem(duckSpin);
+        */
 
-        robot.registerSubsystem(mecanumDrive);
-        robot.registerSubsystem(outtake);
-        robot.registerSubsystem(intake);
-        robot.registerSubsystem(duckSpin);
 
         int slidecountup = 0;
         int slidecountdown = 0;
 
-        intake.reset();
-        outtake.dumpReset();
+        crabRobot = new CrabRobot(this, telemetry);
+        /*
+        crabRobot.intake.reset();
+        crabRobot.outtake.dumpReset();
+
+         */
+
+        crabRobot.mecanumDrive.drivingMode = true;
+        waitForStart();
 
         while (!isStopRequested()) {
-
-            robot.update();
-            mecanumDrive.setDrivePower(new Pose2d(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x));
+            crabRobot.mecanumDrive.setDrivePower(new Pose2d(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x));
+            Log.i("power", "gamepad data" + " "
+                    + -gamepad1.left_stick_y + " " + gamepad1.left_stick_x + " " + gamepad1.right_stick_x);
+            Log.i("mecanumdrive", ""+crabRobot.mecanumDrive.drivingMode);
+            crabRobot.update();
 
             if (gamepad1.left_bumper) {
-                mecanumDrive.drivingMode = false;
-                mecanumDrive.setTargetDist(200);
+                crabRobot.mecanumDrive.drivingMode = false;
+                crabRobot.mecanumDrive.setTargetDist(200);
                 telemetry.addLine("Commence Align mode.");
                 //telemetry.addLine("Distance: "+ mecanumDrive.getDistL()+" "+mecanumDrive.getDistR());
 /*
@@ -55,40 +66,44 @@ public class TeleFreightY extends LinearOpMode {
                 }
  */
             }
-
+/*
             //intaking
             if (gamepad1.x){
-                intake.start();
+                crabRobot.intake.start();
             }
             else if (gamepad1.y){
-                intake.stop();
+                crabRobot.intake.stop();
             }
 
             //slide
             if (gamepad1.b){
-                outtake.goUp();
+                crabRobot.outtake.goUp();
             }
             else if (gamepad1.a){
-                outtake.goDown();
+                crabRobot.outtake.goDown();
             }
 
             //dump
             if (gamepad1.left_bumper){
-                outtake.dump();
+                crabRobot.outtake.dump();
             }
             else if (gamepad1.right_bumper){
-                outtake.dumpReset();
+                crabRobot.outtake.dumpReset();
             }
 
             if (gamepad2.a) {
-                duckSpin.start(0.6);
+                crabRobot.duckSpin.start(0.6);
             }
 
             if (gamepad2.b) {
-                duckSpin.stop();
+                crabRobot.duckSpin.stop();
             }
 
             telemetry.update();
+
+ */
+
+
         }
     }
 }

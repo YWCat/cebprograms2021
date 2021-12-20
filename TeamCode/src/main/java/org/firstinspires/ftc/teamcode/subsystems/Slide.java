@@ -50,7 +50,6 @@ public class Slide implements Subsystem{
         slideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slidePower = 0.3;
         level = 0;
-        this.telemetry = telemetry;
         telemetry.addLine("declared"+level);
         telemetry.update();
 

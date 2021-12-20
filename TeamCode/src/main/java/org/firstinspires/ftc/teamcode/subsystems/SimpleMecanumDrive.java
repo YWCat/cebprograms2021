@@ -10,13 +10,15 @@ import com.qualcomm.robotcore.hardware.AnalogInputController;
 import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorSimple.*;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.hardware.Encoder;
+
 
 import android.util.Log;
 
@@ -60,12 +62,12 @@ public class SimpleMecanumDrive implements Subsystem {
     public Telemetry telemetry;
 
     public SimpleMecanumDrive (Robot robot, Telemetry telemetry) {
-        /*
+
         motors[0] = robot.getMotor("DriveLF");
-        motors[1] = robot.getMotor("DriveRF"); //change to
+        motors[1] = robot.getMotor("DriveRF");
         motors[2] = robot.getMotor("DriveRR");
         motors[3] = robot.getMotor("DriveLR");
-        */
+
 
         BNO055IMU imu = robot.getIMU("imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -73,6 +75,10 @@ public class SimpleMecanumDrive implements Subsystem {
         imu.initialize(parameters);
         headingSensor = new CachingSensor<>(() -> imu.getAngularOrientation().firstAngle);
         robot.addListener(headingSensor);
+
+        //forward power = counterclockwise
+        motors[1].setDirection(Direction.REVERSE);
+        motors[2].setDirection(Direction.REVERSE);
         //scale_n = robot.getAnalogSensor("NInput");
         //scale_p = robot.getAnalogSensor("PInput");
 
@@ -128,11 +134,23 @@ public class SimpleMecanumDrive implements Subsystem {
     public void setDrivePower(Pose2d drivePower) { //drivePower = game controller state
 
         if (drivingMode) {
+            Log.i("power", drivePower.getX() + " " + drivePower.getY() + " " + drivePower.getHeading());
+            //LF
+            powers[0] = drivePower.getX() + drivePower.getY() + drivePower.getHeading();
+            //RF
+            powers[1] = drivePower.getX() - drivePower.getY() - drivePower.getHeading();
+            //RR
+            powers[2] = drivePower.getX() + drivePower.getY() - drivePower.getHeading();
+            //LR
+            powers[3] = drivePower.getX() - drivePower.getY() + drivePower.getHeading();
+            /*
+            //previous code for ceb?
             powers[0] = drivePower.getX() - drivePower.getY() - drivePower.getHeading();
             powers[1] = drivePower.getX() + drivePower.getY() - drivePower.getHeading();
 
             powers[2] = drivePower.getX() - drivePower.getY() + drivePower.getHeading();
             powers[3] = drivePower.getX() + drivePower.getY() + drivePower.getHeading();
+             */
         }
         else{
             /*
@@ -161,13 +179,13 @@ public class SimpleMecanumDrive implements Subsystem {
 
     @Override
     public void update(TelemetryPacket packet) {
-        /*
+
         motors[0].setPower(powers[0]);
         motors[1].setPower(powers[1]);
         motors[2].setPower(powers[2]);
         motors[3].setPower(powers[3]);
-        */
 
+        Log.i("mecanumdrive", "Power set"+powers[0]+" "+powers[1]+powers[2]+" "+powers[3]+" ");
         //packet.put("Scale N", scale_n.readRawVoltage());
         //packet.put("Scale P", scale_p.readRawVoltage());
     }
